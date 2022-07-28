@@ -1,0 +1,19 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: acme-catalog-mongo-pass
+spec:
+  provider: vault
+  secretObjects:
+  - data:
+    - key: password
+      objectName: catalog-mongo-password
+    secretName: catalog-mongo-pass
+    type: Opaque
+  parameters:
+    vaultAddress: "http://vault.vault:8200"
+    roleName: "acme"
+    objects: |
+      - objectName: "catalog-mongo-password"
+        secretPath: "acme/data/catalog-mongo-pass"
+        secretKey: "password"
